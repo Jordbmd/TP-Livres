@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../db/database";
 import { Book } from "../db/models/book";
-import { BookIdValidation } from "./validators/book-id"; // Validation pour l'identifiant de livre
-import { CreateBookValidation } from "./validators/create-book"; // Validation pour la création de livre
-import { generateValidationErrorMessage } from "./validators/generate-validation-message"; // Fonction pour générer les messages d'erreur
-import { ListBooksValidation } from "./validators/list-books"; // Validation pour la liste de livres
-import { BookUpdateValidation } from "./validators/update-book"; // Validation pour la mise à jour de livre
+import { BookIdValidation } from "./validators/book-id";
+import { CreateBookValidation } from "./validators/create-book";
+import { generateValidationErrorMessage } from "./validators/generate-validation-message";
+import { ListBooksValidation } from "./validators/list-books";
+import { BookUpdateValidation } from "./validators/update-book";
 
 export const createBookHandler = async (req: Request, res: Response) => {
   try {
@@ -44,6 +44,14 @@ export const listBookHandler = async (req: Request, res: Response) => {
     const listBookRequest = validation.value;
     const query = AppDataSource.createQueryBuilder(Book, "book");
 
+    // Filtrage par nom
+    if (listBookRequest.name) {
+      query.andWhere("book.name ILIKE :name", {
+        name: `%${listBookRequest.name}%`,
+      });
+    }
+
+    // Pagination
     query.skip((listBookRequest.page - 1) * listBookRequest.limit);
     query.take(listBookRequest.limit);
 
