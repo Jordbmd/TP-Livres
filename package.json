@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "ts --exec ts-node src/main.ts",
+    "start:dev:js": "ts --exec \"tsc && node ./dist/main.js\""
   },
   "repository": {
     "type": "git",
@@ -18,7 +20,16 @@
   },
   "homepage": "https://github.com/Jordbmd/TP-Livres#readme",
   "devDependencies": {
+    "@types/express": "^5.0.1",
+    "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "joi": "^17.13.3",
+    "pg": "^8.14.1",
+    "typeorm": "^0.3.21"
   }
 }
