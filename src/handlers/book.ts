@@ -35,10 +35,9 @@ export const listBookHandler = async (req: Request, res: Response) => {
   try {
     const validation = ListBooksValidation.validate(req.query);
     if (validation.error) {
-      res
+      return res
         .status(400)
         .send(generateValidationErrorMessage(validation.error.details));
-      return;
     }
 
     const listBookRequest = validation.value;
@@ -68,9 +67,7 @@ export const listBookHandler = async (req: Request, res: Response) => {
       total_pages: totalPages,
     });
   } catch (error) {
-    if (error instanceof Error) {
-      console.log(`Internal error: ${error.message}`);
-    }
+    console.error("Error listing books:", error);
     res.status(500).send({ message: "internal error" });
   }
 };
