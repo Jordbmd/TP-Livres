@@ -10,5 +10,5 @@ export const AppDataSource = new DataSource({
   database: "mydatabase",
   logging: true,
   synchronize: true,
-  entities: [path.join(__dirname, "../models/*.ts")],
+  entities: [path.join(__dirname, "models/*.ts")],
 });
