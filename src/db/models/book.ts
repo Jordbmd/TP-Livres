@@ -20,7 +20,8 @@ export class Book {
   @Column()
   author: string;
 
-  @Column()
+  // j'ai du ajouté ca pour ca pour les nombres a virgule (postgre ne supporte pas par default avec number)
+  @Column({ type: "decimal", precision: 10, scale: 2 })
   price: number;
 
   @Column()
