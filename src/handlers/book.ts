@@ -43,14 +43,12 @@ export const listBookHandler = async (req: Request, res: Response) => {
     const listBookRequest = validation.value;
     const query = AppDataSource.createQueryBuilder(Book, "book");
 
-    // Filtrage par nom
     if (listBookRequest.name) {
       query.andWhere("book.name ILIKE :name", {
         name: `%${listBookRequest.name}%`,
       });
     }
 
-    // Pagination
     query.skip((listBookRequest.page - 1) * listBookRequest.limit);
     query.take(listBookRequest.limit);
 
@@ -124,7 +122,6 @@ export const updateBookHandler = async (req: Request, res: Response) => {
       return;
     }
 
-    // Mettez à jour les champs nécessaires
     if (updateBook.price) {
       bookFound.price = updateBook.price;
     }
